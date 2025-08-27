@@ -1,8 +1,9 @@
 # GPTK - Assistant IA pour Kali Linux
 ## Description : Bot basé sur OpenAI pour codage et outils Kali.
 # README pour GPTK
+# README pour GPTK
 
-Bienvenue dans le dépôt GitHub de **GPTK** ! Ce projet est un assistant IA personnalisé, basé sur l'API OpenAI, conçu spécifiquement pour Kali Linux. Il aide au codage, répond à des questions bien formulées, simule des recherches approfondies (via prompts intelligents), et est optimisé pour les outils de pentesting Kali (comme Nmap, Metasploit, etc.). Développé en Go pour une portabilité maximale entre Windows et Linux, il inclut une persistance des sessions, une interface web optionnelle, et des modules extensibles.
+Bienvenue dans le dépôt GitHub de **GPTK** ! Ce projet est un assistant IA personnalisé, basé sur l'API OpenAI, conçu spécifiquement pour Kali Linux. Il aide au codage, répond à des questions bien formulées, simule des recherches approfondies (via prompts intelligents), génère des images (via DALL·E), et est optimisé pour les outils de pentesting Kali (comme Nmap, Metasploit, etc.). Développé en Go pour une portabilité maximale entre Windows et Linux, il inclut une persistance des sessions, une interface web optionnelle, un export CSV, et des modules extensibles.
 
 Ce README est détaillé pour vous guider de A à Z : installation, configuration, usage, et contribution. Si vous avez des questions, ouvrez une issue !
 
@@ -11,27 +12,31 @@ GPTK (GPT for Kali) est un bot CLI (ligne de commande) qui utilise l'API OpenAI 
 - Répondre en français (forcé via un prompt système).
 - Assister au codage (ex. : générer des scripts Go, Kotlin, ou Python).
 - Expliquer et générer des commandes pour outils Kali (via modules dédiés).
-- Sauvegarder l'historique des sessions dans un fichier JSON persistant.
+- Sauvegarder l'historique des sessions dans un fichier JSON persistant avec timestamps.
+- Générer des images visuelles (ex. : diagrammes de réseaux pour Nmap).
+- Exporter l'historique en CSV pour analyse.
 - Offrir une interface web simple (optionnelle) pour un usage via navigateur.
 
-Le projet est open-source, facile à étendre, et adapté à vos intérêts en développement Android, pentesting Kali, et IA (basé sur nos échanges).
+Le projet est open-source, facile à étendre, et adapté à vos intérêts en développement Android, pentesting Kali, et IA.
 
 ## Fonctionnalités Principales
-- **Réponses IA** : Basées sur GPT-4o, toujours en français, claires et concises.
+- **Réponses IA** : Basées sur GPT-4o, toujours en français, claires et concises, avec exemples de commandes pour Kali.
 - **Historique Persistant** : Sauvegarde automatique des questions/réponses dans `history.json` avec timestamp (format ISO).
 - **Flags CLI** :
   - `--show-history` : Affiche l'historique formaté (numéroté, avec timestamp).
   - `--clear-history` : Efface le fichier d'historique.
+  - `--export-csv` : Exporte l'historique en CSV (history.csv).
+  - `--image "prompt"` : Génère et sauvegarde une image via DALL·E (ex. : generated_image.png).
 - **Modules pour Kali** : Explications et génération de commandes pour Nmap, Metasploit, etc. (extensible via dossier `modules/`).
 - **Interface Web Optionnelle** : Lancez avec `--web` pour un chat via navigateur (localhost:8080).
 - **Portabilité** : Compile sur Windows et Kali ; persistance locale.
 - **Sécurité** : Clé API via variable d'environnement (jamais stockée dans le code).
 
 ## Prérequis
-- **Clé API OpenAI** : Gratuite pour un usage basique. Générez-la sur [platform.openai.com](https://platform.openai.com/account/api-keys) avec votre email (ex. : xxxxxx@gmail.com).
+- **Clé API OpenAI** : Gratuite pour un usage basique. Générez-la sur [platform.openai.com](https://platform.openai.com/account/api-keys) avec votre email (ex. : rabzouz6481@gmail.com).
 - **Go** : Version 1.23+ (installé sur Windows et Kali).
 - **Git** : Pour cloner le dépôt.
-- **Accès Internet** : Pour les appels API.
+- **Accès Internet** : Pour les appels API et génération d'images.
 
 ## Installation
 ### Sur Windows (PowerShell)
@@ -100,16 +105,17 @@ Historique chargé : 0 entrées
 GPTK prêt – posez vos questions (Ctrl+C pour quitter).
 Explique Nmap -sS
 --- Réponse GPTK ---
-[Réponse en français sur Nmap -sS]
+[Réponse en français sur Nmap -sS avec exemples]
 >>>
 ```
 
 - **Flags** :
-  - `--show-history` : Liste l'historique (ex. : "1) [2025-08-27T13:30:00Z] Question ⇒ Réponse").
+  - `--show-history` : Liste l'historique (ex. : "1) [2025-08-27TXX:XX:XXZ] Question ⇒ Réponse").
   - `--clear-history` : Efface `history.json`.
-- **Interface Web** : Ajoutez le flag `--web` (implémentez-le si needed ; lance un serveur sur :8080).
+  - `--export-csv` : Exporte en history.csv.
+  - `--image "prompt"` : Génère une image (ex. : generated_image.png).
 
-Pour des recherches : Posez comme "Recherche approfondie sur Metasploit exploits" – l'IA simule via son entraînement.
+Pour des recherches : Posez comme "Recherche approfondie sur Metasploit exploits" – l'IA simule via son entraînement. Pour images : `--image "Diagramme Nmap"`.
 
 ## Configuration Avancée
 - **Clé API** : Si expirée, régénérez sur OpenAI et mettez à jour la variable.
@@ -127,6 +133,6 @@ Pour des recherches : Posez comme "Recherche approfondie sur Metasploit exploits
 Idées : Ajoutez des modules pour Wireshark, Burp Suite, ou une UI web plus avancée.
 
 ## Licence
-MIT License – Voir le fichier LICENSE pour détails. Utilisez librement, mais citez la source.
+MIT License – Voir le fichier [LICENSE](LICENSE) pour détails. Utilisez librement, mais citez la source.
 
 Merci d'utiliser GPTK ! Si bugs ou idées, ouvrez une issue sur GitHub. 😊
