@@ -6,22 +6,18 @@ import (
 	"fmt"
 	"os"
 
-	openai "github.com/openai/openai-go"
-	"github.com/openai/openai-go/option"
+	openai "github.com/sashabaranov/go-openai"
 )
 
 func main() {
-	// Lire la clé depuis l'environnement
 	apiKey := os.Getenv("OPENAI_API_KEY")
 	if apiKey == "" {
-		fmt.Println("Définissez OPENAI_API_KEY puis relancez !")
+		fmt.Println("Définissez la variable environnementale OPENAI_API_KEY puis relancez !")
 		return
 	}
 
-	// Créer le client avec la clé
-	client := openai.NewClient(option.WithAPIKey(apiKey))
+	client := openai.NewClient(apiKey)
 
-	// Boucle interactive
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Println("GPTK prêt – posez vos questions (Ctrl+C pour quitter).")
 
@@ -31,19 +27,23 @@ func main() {
 			continue
 		}
 
-		// Appel à l'API (modèle gpt-4o)
-		resp, err := client.Chat.Completions.New(context.Background(), openai.ChatCompletionNewParams{
-			Messages: []openai.ChatCompletionMessageParamUnion{
-				openai.UserMessage(prompt),
+		resp, err := client.CreateChatCompletion(
+			context.Background(),
+			openai.ChatCompletionRequest{
+				Model: openai.GPT4o, // ou "gpt-4o" si erreur
+				Messages: []openai.ChatCompletionMessage{
+					{Role: "user", Content: prompt},
+				},
 			},
-			Model: openai.String("gpt-4o"),
-		})
+		)
+
 		if err != nil {
 			fmt.Println("Erreur API :", err)
 			continue
 		}
+
 		fmt.Println("\n--- Réponse GPTK ---")
-		fmt.Println(resp.Choices.Message.Content)
+		fmt.Println(resp.Choices[0].Message.Content)
 		fmt.Print("\n>>> ")
 	}
 }
