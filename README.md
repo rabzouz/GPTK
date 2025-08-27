@@ -28,7 +28,7 @@ Le projet est open-source, facile à étendre, et adapté à vos intérêts en d
 - **Sécurité** : Clé API via variable d'environnement (jamais stockée dans le code).
 
 ## Prérequis
-- **Clé API OpenAI** : Gratuite pour un usage basique. Générez-la sur [platform.openai.com](https://platform.openai.com/account/api-keys) avec votre email (ex. : rabzouz6481@gmail.com).
+- **Clé API OpenAI** : Gratuite pour un usage basique. Générez-la sur [platform.openai.com](https://platform.openai.com/account/api-keys) avec votre email (ex. : xxxxxx@gmail.com).
 - **Go** : Version 1.23+ (installé sur Windows et Kali).
 - **Git** : Pour cloner le dépôt.
 - **Accès Internet** : Pour les appels API.
